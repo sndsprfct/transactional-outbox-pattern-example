@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: ${DATABASE_BASE_URL}/${DATABASE_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1

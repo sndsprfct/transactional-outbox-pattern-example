@@ -9,6 +9,12 @@ spring:
   sql:
     init:
       mode: never
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    default-schema: flyway
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
 
 server:
   port: 8080

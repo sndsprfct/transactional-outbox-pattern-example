@@ -16,8 +16,8 @@ import java.util.Set;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public Set<Product> checkProductsAvailability(Set<Long> requiredProductIds) {
-        Set<Product> foundProducts = new HashSet<>(productRepository.findAllById(requiredProductIds));
+    public List<Product> checkProductsAvailability(Set<Long> requiredProductIds) {
+        List<Product> foundProducts = productRepository.findAllById(requiredProductIds);
         if (foundProducts.size() != requiredProductIds.size()) {
             throw new ProductsNotFoundException();
         }

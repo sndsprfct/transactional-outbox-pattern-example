@@ -23,7 +23,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     public OrderCreatedResponseDto createOrder(OrderCreationRequestDto orderCreationRequestDto) {
-        Set<Product> products = productService.checkProductsAvailability(orderCreationRequestDto.productsAmountByProductId().keySet());
+        List<Product> products = productService.checkProductsAvailability(orderCreationRequestDto.productsAmountByProductId().keySet());
         validateOrderIdempotencyKey(orderCreationRequestDto);
         Order order = orderMapper.toEntity(orderCreationRequestDto, products);
         Order createdOrder = orderRepository.save(order);

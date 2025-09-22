@@ -19,13 +19,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderItems", source = "productsAmountByProductId", qualifiedByName = "mapItems")
-    Order toEntity(OrderCreationRequestDto orderCreationRequestDto, @Context Set<Product> products);
+    Order toEntity(OrderCreationRequestDto orderCreationRequestDto, @Context List<Product> products);
 
     @Mapping(target = "orderId", source = "id")
     @Mapping(target = "orderItems", source = "orderItems", qualifiedByName = "mapOrderItemsToOrderResponseDtoItems")
@@ -33,7 +32,7 @@ public interface OrderMapper {
     OrderResponseDto map(Order order);
 
     @Named("mapItems")
-    default List<OrderItem> mapItems(Map<Long, Integer> productsAmountByProductId, @Context Set<Product> products) {
+    default List<OrderItem> mapItems(Map<Long, Integer> productsAmountByProductId, @Context List<Product> products) {
         List<OrderItem> orderItems = new ArrayList<>();
         for (Map.Entry<Long, Integer> entry : productsAmountByProductId.entrySet()) {
             Product product = products.stream().filter(p -> entry.getKey().equals(p.getId())).toList().get(0);

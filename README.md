@@ -8,7 +8,8 @@ The project that implements **Transactional Outbox** pattern
 - [ ] **Orders Processing** Microservice
 
 ## Technologies and Tools
-- [ ] Java 21
-- [ ] Spring Boot 3.5.6
-- [ ] PostgreSQL Database
-- [ ] Flyway Database Migration Tool
+- [x] **Java 21**
+- [x] **Spring Boot** 3.5.6
+- [x] **PostgreSQL** Database
+- [x] **Flyway** Database Migration Tool
+- [x] **Testcontainers** for Integration Tests

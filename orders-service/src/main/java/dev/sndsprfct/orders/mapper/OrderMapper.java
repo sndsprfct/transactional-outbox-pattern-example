@@ -22,17 +22,18 @@ import java.util.Map;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
+
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "orderItems", source = "productsAmountByProductId", qualifiedByName = "mapItems")
-    Order toEntity(OrderCreationRequestDto orderCreationRequestDto, @Context List<Product> products);
+    @Mapping(target = "orderItems", source = "productsAmountByProductId", qualifiedByName = "mapProductsToOrderItems")
+    Order map(OrderCreationRequestDto orderCreationRequestDto, @Context List<Product> products);
 
     @Mapping(target = "orderId", source = "id")
     @Mapping(target = "orderItems", source = "orderItems", qualifiedByName = "mapOrderItemsToOrderResponseDtoItems")
     @Mapping(target = "totalPrice", source = ".", qualifiedByName = "calculateTotalPrice")
     OrderResponseDto map(Order order);
 
-    @Named("mapItems")
-    default List<OrderItem> mapItems(Map<Long, Integer> productsAmountByProductId, @Context List<Product> products) {
+    @Named("mapProductsToOrderItems")
+    default List<OrderItem> mapProductsToOrderItems(Map<Long, Integer> productsAmountByProductId, @Context List<Product> products) {
         List<OrderItem> orderItems = new ArrayList<>();
         for (Map.Entry<Long, Integer> entry : productsAmountByProductId.entrySet()) {
             Product product = products.stream().filter(p -> entry.getKey().equals(p.getId())).toList().get(0);

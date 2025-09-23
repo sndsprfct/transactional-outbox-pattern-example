@@ -12,4 +12,8 @@ The project that implements **Transactional Outbox** pattern
 - [x] **Spring Boot** 3.5.6
 - [x] **PostgreSQL** Database
 - [x] **Flyway** Database Migration Tool
-- [x] **Testcontainers** for Integration Tests
+- [x] **MapStruct** for objects mapping
+- [x] Unit and Integration tests with 
+  - **Testcontainers**, 
+  - **SpringBootTest**, **MockMvc**, 
+  - **JUnit**, **AssertJ**

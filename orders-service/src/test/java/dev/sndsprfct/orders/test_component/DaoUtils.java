@@ -1,4 +1,4 @@
-package dev.sndsprfct.orders.utils;
+package dev.sndsprfct.orders.test_component;
 
 import dev.sndsprfct.orders.constant.OrderStatus;
 import dev.sndsprfct.orders.entity.Order;

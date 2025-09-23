@@ -38,8 +38,8 @@ public class OrderIntegrationTest {
     private MockMvc mockMvc;
     @Autowired
     private DaoUtils daoUtils;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @Sql(value = "/sql/init-products.sql")

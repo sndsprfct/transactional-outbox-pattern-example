@@ -19,14 +19,16 @@ public class ProductService {
     public List<Product> checkProductsAvailability(Set<Long> requiredProductIds) {
         List<Product> foundProducts = productRepository.findAllById(requiredProductIds);
         if (foundProducts.size() != requiredProductIds.size()) {
-            throw new ProductsNotFoundException();
+            HashSet<Long> notFoundProductIds = new HashSet<>(requiredProductIds);
+            foundProducts.stream().map(Product::getId).toList().forEach(notFoundProductIds::remove);
+            throw new ProductsNotFoundException(notFoundProductIds);
         }
 
         List<Product> notAvailableProducts = foundProducts.stream()
                 .filter(product -> !product.getIsAvailable())
                 .toList();
         if (!notAvailableProducts.isEmpty()) {
-            throw new ProductsNotAvailableException();
+            throw new ProductsNotAvailableException(notAvailableProducts.stream().map(Product::getId).toList());
         }
         return foundProducts;
     }

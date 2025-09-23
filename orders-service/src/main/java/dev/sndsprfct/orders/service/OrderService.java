@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class OrderService {
     private void validateOrderIdempotencyKey(OrderCreationRequestDto orderCreationRequestDto) {
         List<Order> customerOrders = findAllOrdersByCustomerId(orderCreationRequestDto.customerId());
         if (!customerOrders.stream().filter(o -> o.getIdempotencyKey().equals(orderCreationRequestDto.idempotencyKey())).toList().isEmpty()) {
-            throw new OrderWithSuchIdempotencyKeyAlreadyExistsException();
+            throw new OrderWithSuchIdempotencyKeyAlreadyExistsException(orderCreationRequestDto.idempotencyKey());
         }
     }
 

@@ -1,5 +1,7 @@
 # Transactional Outbox Pattern Example
 
+[![Tests](https://github.com/snds-prfct/transactional-outbox-pattern-example/actions/workflows/tests.yaml/badge.svg)](https://github.com/snds-prfct/transactional-outbox-pattern-example/actions/workflows/tests.yaml)
+
 The project that implements [**Transactional Outbox** pattern](https://microservices.io/patterns/data/transactional-outbox.html)
 
 ## Components

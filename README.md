@@ -1,6 +1,6 @@
 # Transactional Outbox Pattern Example
 
-The project that implements **Transactional Outbox** pattern
+The project that implements [**Transactional Outbox** pattern](https://microservices.io/patterns/data/transactional-outbox.html)
 
 ## Components
 

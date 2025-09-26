@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sndsprfct.orders.controller.OrderController;
 import dev.sndsprfct.orders.dto.ErrorDetails;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
+import dev.sndsprfct.orders.exception.OrderWithSuchIdempotencyKeyAlreadyExistsException;
 import dev.sndsprfct.orders.exception.ProductsNotAvailableException;
 import dev.sndsprfct.orders.exception.ProductsNotFoundException;
 import dev.sndsprfct.orders.service.OrderService;
@@ -31,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = OrderController.class)
 public class OrderControllerTest {
+
+    private static final UUID TEST_IDEMPOTENCY_KEY = UUID.randomUUID();
 
     @MockitoBean
     private OrderService orderService;
@@ -90,10 +93,36 @@ public class OrderControllerTest {
                 .isEqualTo(expectedErrorResponse);
     }
 
+    @Test
+    @SneakyThrows
+    void testOrderCreationWhenProvidedIdempotencyKeyAlreadyUsed() {
+        // given
+        Mockito.when(orderService.createOrder(any()))
+                .thenThrow(new OrderWithSuchIdempotencyKeyAlreadyExistsException(TEST_IDEMPOTENCY_KEY));
+        String orderCreationRequestDtoJson = getOrderCreationRequestDtoJson();
+        ErrorDetails expectedErrorResponse = new ErrorDetails(
+                null,
+                HttpStatus.BAD_REQUEST.value(),
+                "Order with idempotency key '%s' already exists".formatted(TEST_IDEMPOTENCY_KEY));
+
+        // when then
+        String responseJson = mockMvc.perform(post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(orderCreationRequestDtoJson))
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse().getContentAsString();
+
+        ErrorDetails errorDetails = objectMapper.readValue(responseJson, ErrorDetails.class);
+        assertThat(errorDetails)
+                .usingRecursiveComparison()
+                .ignoringFieldsOfTypes(Instant.class)
+                .isEqualTo(expectedErrorResponse);
+    }
+
     private String getOrderCreationRequestDtoJson() throws JsonProcessingException {
         OrderCreationRequestDto orderCreationRequestDto = new OrderCreationRequestDto(
                 1L,
-                UUID.randomUUID(),
+                TEST_IDEMPOTENCY_KEY,
                 Map.of(1L, 2),
                 "Delivery Address");
         return objectMapper.writeValueAsString(orderCreationRequestDto);

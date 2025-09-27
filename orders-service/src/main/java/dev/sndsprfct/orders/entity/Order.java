@@ -28,7 +28,7 @@ import java.util.UUID;
 @Table(schema = "orders", name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @Setter
 @Getter
 public class Order {

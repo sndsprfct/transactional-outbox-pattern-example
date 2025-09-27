@@ -20,13 +20,14 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final OrderProcessingService orderProcessingService;
 
     public OrderCreatedResponseDto createOrder(OrderCreationRequestDto orderCreationRequestDto) {
         List<Product> products = productService.checkProductsAvailability(orderCreationRequestDto.productsAmountByProductId().keySet());
         validateOrderIdempotencyKey(orderCreationRequestDto);
         Order order = orderMapper.map(orderCreationRequestDto, products);
-        Order createdOrder = orderRepository.save(order);
-        return new OrderCreatedResponseDto(createdOrder.getId());
+        Long createdOrderId = orderProcessingService.processOrderCreation(order);
+        return new OrderCreatedResponseDto(createdOrderId);
     }
 
     public List<OrderResponseDto> findCustomerOrders(Long customerId) {

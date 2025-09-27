@@ -1,4 +1,4 @@
-package dev.sndsprfct.orders.mapper;
+package dev.sndsprfct.orders.utils;
 
 import dev.sndsprfct.orders.constant.OrderStatus;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
@@ -7,8 +7,6 @@ import dev.sndsprfct.orders.dto.response.OrderResponseDto;
 import dev.sndsprfct.orders.entity.Order;
 import dev.sndsprfct.orders.entity.OrderItem;
 import dev.sndsprfct.orders.entity.Product;
-import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -16,67 +14,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+public class TestConstants {
+    public static final Long TEST_ORDER_ID = 1L;
+    public static final Long TEST_CUSTOMER_ID = 1L;
+    public static final String TEST_DELIVERY_ADDRESS = "Delivery Address";
+    public static final UUID TEST_IDEMPOTENCY_KEY = UUID.randomUUID();
 
-class OrderMapperTest {
+    public static final Long TEST_PRODUCT1_ID = 1L;
+    public static final String TEST_PRODUCT1_NAME = "Test Product 1";
+    public static final Long TEST_PRODUCT1_PRICE = 100L;
 
-    private static final Long TEST_CUSTOMER_ID = 1L;
-    private static final String TEST_DELIVERY_ADDRESS = "Delivery Address";
-    private static final UUID TEST_IDEMPOTENCY_KEY = UUID.randomUUID();
+    public static final Long TEST_PRODUCT2_ID = 2L;
+    public static final String TEST_PRODUCT2_NAME = "Test Product 2";
+    public static final Long TEST_PRODUCT2_PRICE = 100L;
 
-    private static final Long TEST_PRODUCT1_ID = 1L;
-    private static final String TEST_PRODUCT1_NAME = "Test Product 1";
-    private static final Long TEST_PRODUCT1_PRICE = 100L;
-
-    private static final Long TEST_PRODUCT2_ID = 2L;
-    private static final String TEST_PRODUCT2_NAME = "Test Product 2";
-    private static final Long TEST_PRODUCT2_PRICE = 100L;
-
-    private final OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
-
-    @Test
-    void testOrderEntityToOrderResponseDtoMapping() {
-        // given
-        Order order = getTestOrder();
-        OrderResponseDto orderResponseDto = getOrderResponseDto();
-
-
-        // when
-        OrderResponseDto map = orderMapper.map(order);
-
-        // then
-        assertThat(map)
-                .usingRecursiveComparison()
-                .ignoringFieldsOfTypes(Instant.class)
-                .isEqualTo(orderResponseDto);
-    }
-
-    @Test
-    void testOrderCreationRequestDtoToOrderEntityMapping() {
-        // given
-        OrderCreationRequestDto orderCreationRequestDto = getOrderCreationRequestDto();
-        Order expectedOrder = getTestOrder();
-        expectedOrder.setId(null);
-        List<Product> products = List.of(getProduct1(), getProduct2());
-
-        // when
-        Order order = orderMapper.map(orderCreationRequestDto, products);
-
-        // then
-        assertThat(order)
-                .usingRecursiveComparison()
-                .ignoringFieldsOfTypes(Instant.class, OrderItem.class)
-                .isEqualTo(expectedOrder);
-
-        assertThat(order.getOrderItems())
-                .extracting("product.name", "quantity", "unitPrice")
-                .containsExactlyInAnyOrder(
-                        tuple(TEST_PRODUCT1_NAME, 2, TEST_PRODUCT1_PRICE),
-                        tuple(TEST_PRODUCT2_NAME, 2, TEST_PRODUCT2_PRICE));
-    }
-
-    private OrderCreationRequestDto getOrderCreationRequestDto() {
+    public static OrderCreationRequestDto getOrderCreationRequestDto() {
         return new OrderCreationRequestDto(
                 1L,
                 TEST_IDEMPOTENCY_KEY,
@@ -84,7 +36,7 @@ class OrderMapperTest {
                 TEST_DELIVERY_ADDRESS);
     }
 
-    private OrderResponseDto getOrderResponseDto() {
+    public static OrderResponseDto getOrderResponseDto() {
         OrderItemResponseDto orderItemResponseDto1 = new OrderItemResponseDto(
                 TEST_PRODUCT1_ID,
                 TEST_PRODUCT1_ID,
@@ -107,7 +59,7 @@ class OrderMapperTest {
                 TEST_PRODUCT1_PRICE + TEST_PRODUCT2_PRICE);
     }
 
-    private Order getTestOrder() {
+    public static Order getTestOrder() {
         Product product1 = getProduct1();
         Product product2 = getProduct2();
 
@@ -136,7 +88,7 @@ class OrderMapperTest {
                 .build();
     }
 
-    private static Product getProduct2() {
+    public static Product getProduct2() {
         return Product.builder()
                 .id(TEST_PRODUCT2_ID)
                 .name(TEST_PRODUCT2_NAME)
@@ -145,7 +97,7 @@ class OrderMapperTest {
                 .build();
     }
 
-    private static Product getProduct1() {
+    public static Product getProduct1() {
         return Product.builder()
                 .id(TEST_PRODUCT1_ID)
                 .name(TEST_PRODUCT1_NAME)

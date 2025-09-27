@@ -15,6 +15,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -46,6 +48,7 @@ public class OutboxEvent {
     private OutboxEventStatus status = OutboxEventStatus.PENDING;
 
     @Column(name = "payload")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String payload;
 
     @Override

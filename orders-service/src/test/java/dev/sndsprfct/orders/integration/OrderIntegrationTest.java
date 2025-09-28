@@ -3,8 +3,8 @@ package dev.sndsprfct.orders.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sndsprfct.orders.constant.OrderStatus;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
-import dev.sndsprfct.orders.entity.Order;
-import dev.sndsprfct.orders.entity.OrderItem;
+import dev.sndsprfct.orders.entity.orders.Order;
+import dev.sndsprfct.orders.entity.orders.OrderItem;
 import dev.sndsprfct.orders.test_component.DaoUtils;
 import dev.sndsprfct.orders.test_component.TestcontainersConfiguration;
 import lombok.SneakyThrows;
@@ -49,7 +49,6 @@ public class OrderIntegrationTest {
         UUID idempotencyKey = UUID.randomUUID();
         String testDeliveryAddress = "Test Address";
         OrderCreationRequestDto orderCreationRequestDto = new OrderCreationRequestDto(
-                1L,
                 idempotencyKey,
                 Map.of(1L, 2, 2L, 2), testDeliveryAddress);
         String dto = objectMapper.writeValueAsString(orderCreationRequestDto);

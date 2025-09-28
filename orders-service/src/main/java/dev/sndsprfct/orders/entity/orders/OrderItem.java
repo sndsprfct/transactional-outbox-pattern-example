@@ -1,4 +1,4 @@
-package dev.sndsprfct.orders.entity;
+package dev.sndsprfct.orders.entity.orders;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;

@@ -1,6 +1,6 @@
 package dev.sndsprfct.orders.service;
 
-import dev.sndsprfct.orders.entity.Product;
+import dev.sndsprfct.orders.entity.orders.Product;
 import dev.sndsprfct.orders.exception.ProductsNotAvailableException;
 import dev.sndsprfct.orders.exception.ProductsNotFoundException;
 import dev.sndsprfct.orders.repository.ProductRepository;

@@ -1,6 +1,9 @@
 package dev.sndsprfct.orders.handler;
 
-import dev.sndsprfct.orders.dto.ErrorDetails;
+import dev.sndsprfct.orders.dto.response.ErrorDetails;
+import dev.sndsprfct.orders.exception.CustomerDoesNotHaveOrderWithSuchId;
+import dev.sndsprfct.orders.exception.OrderCannotBeCancelledException;
+import dev.sndsprfct.orders.exception.OrderNotFoundException;
 import dev.sndsprfct.orders.exception.OrderWithSuchIdempotencyKeyAlreadyExistsException;
 import dev.sndsprfct.orders.exception.ProductsNotAvailableException;
 import dev.sndsprfct.orders.exception.ProductsNotFoundException;
@@ -18,20 +21,41 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetails> handleProductsNotFoundException(ProductsNotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(new ErrorDetails(Instant.now(), HttpStatus.CONFLICT.value(), e.getMessage()));
+                .body(ErrorDetails.of(HttpStatus.CONFLICT.value(), e.getMessage()));
     }
 
     @ExceptionHandler(ProductsNotAvailableException.class)
     public ResponseEntity<ErrorDetails> handleProductsNotAvailableException(ProductsNotAvailableException e) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(new ErrorDetails(Instant.now(), HttpStatus.CONFLICT.value(), e.getMessage()));
+                .body(ErrorDetails.of(HttpStatus.CONFLICT.value(), e.getMessage()));
     }
 
     @ExceptionHandler(OrderWithSuchIdempotencyKeyAlreadyExistsException.class)
     public ResponseEntity<ErrorDetails> handleOrderWithSuchIdempotencyKeyAlreadyExistsException(OrderWithSuchIdempotencyKeyAlreadyExistsException e) {
         return ResponseEntity
                 .badRequest()
-                .body(new ErrorDetails(Instant.now(), HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+                .body(ErrorDetails.of(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleOrderNotFoundException(OrderNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorDetails.of(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(CustomerDoesNotHaveOrderWithSuchId.class)
+    public ResponseEntity<ErrorDetails> handleCustomerDoesNotHaveOrderWithSuchId(CustomerDoesNotHaveOrderWithSuchId e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorDetails.of(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(OrderCannotBeCancelledException.class)
+    public ResponseEntity<ErrorDetails> handleOrderCannotBeCancelledException(OrderCannotBeCancelledException e) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ErrorDetails.of(HttpStatus.CONFLICT.value(), e.getMessage()));
     }
 }

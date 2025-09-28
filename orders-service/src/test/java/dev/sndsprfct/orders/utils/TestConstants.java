@@ -4,9 +4,9 @@ import dev.sndsprfct.orders.constant.OrderStatus;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
 import dev.sndsprfct.orders.dto.response.OrderItemResponseDto;
 import dev.sndsprfct.orders.dto.response.OrderResponseDto;
-import dev.sndsprfct.orders.entity.Order;
-import dev.sndsprfct.orders.entity.OrderItem;
-import dev.sndsprfct.orders.entity.Product;
+import dev.sndsprfct.orders.entity.orders.Order;
+import dev.sndsprfct.orders.entity.orders.OrderItem;
+import dev.sndsprfct.orders.entity.orders.Product;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -30,7 +30,6 @@ public class TestConstants {
 
     public static OrderCreationRequestDto getOrderCreationRequestDto() {
         return new OrderCreationRequestDto(
-                1L,
                 TEST_IDEMPOTENCY_KEY,
                 Map.of(TEST_PRODUCT1_ID, 2, TEST_PRODUCT2_ID, 2),
                 TEST_DELIVERY_ADDRESS);

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dev.sndsprfct.orders.constant.OutboxEventStatus;
 import dev.sndsprfct.orders.constant.OutboxEventType;
-import dev.sndsprfct.orders.entity.Order;
+import dev.sndsprfct.orders.entity.orders.Order;
 import dev.sndsprfct.orders.entity.outbox.OutboxEvent;
 import dev.sndsprfct.orders.repository.OrderRepository;
 import dev.sndsprfct.orders.repository.OutboxEventRepository;

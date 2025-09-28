@@ -1,4 +1,4 @@
-package dev.sndsprfct.orders.entity;
+package dev.sndsprfct.orders.entity.orders;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

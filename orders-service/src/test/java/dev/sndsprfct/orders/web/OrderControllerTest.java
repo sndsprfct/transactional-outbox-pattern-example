@@ -3,7 +3,7 @@ package dev.sndsprfct.orders.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sndsprfct.orders.controller.OrderController;
-import dev.sndsprfct.orders.dto.ErrorDetails;
+import dev.sndsprfct.orders.dto.response.ErrorDetails;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
 import dev.sndsprfct.orders.exception.OrderWithSuchIdempotencyKeyAlreadyExistsException;
 import dev.sndsprfct.orders.exception.ProductsNotAvailableException;
@@ -121,7 +121,6 @@ public class OrderControllerTest {
 
     private String getOrderCreationRequestDtoJson() throws JsonProcessingException {
         OrderCreationRequestDto orderCreationRequestDto = new OrderCreationRequestDto(
-                1L,
                 TEST_IDEMPOTENCY_KEY,
                 Map.of(1L, 2),
                 "Delivery Address");

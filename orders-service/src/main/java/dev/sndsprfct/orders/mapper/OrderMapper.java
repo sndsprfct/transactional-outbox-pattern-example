@@ -4,9 +4,9 @@ import dev.sndsprfct.orders.constant.OrderStatus;
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
 import dev.sndsprfct.orders.dto.response.OrderItemResponseDto;
 import dev.sndsprfct.orders.dto.response.OrderResponseDto;
-import dev.sndsprfct.orders.entity.Order;
-import dev.sndsprfct.orders.entity.OrderItem;
-import dev.sndsprfct.orders.entity.Product;
+import dev.sndsprfct.orders.entity.orders.Order;
+import dev.sndsprfct.orders.entity.orders.OrderItem;
+import dev.sndsprfct.orders.entity.orders.Product;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -25,6 +25,7 @@ public interface OrderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderItems", source = "productsAmountByProductId", qualifiedByName = "mapProductsToOrderItems")
+    @Mapping(target = "customerId", expression = "java( dev.sndsprfct.orders.security.PrincipalUtils.getCurrentUserId() )")
     Order map(OrderCreationRequestDto orderCreationRequestDto, @Context List<Product> products);
 
     @Mapping(target = "orderId", source = "id")

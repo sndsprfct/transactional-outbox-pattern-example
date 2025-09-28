@@ -2,9 +2,9 @@ package dev.sndsprfct.orders.unit.mapper;
 
 import dev.sndsprfct.orders.dto.request.OrderCreationRequestDto;
 import dev.sndsprfct.orders.dto.response.OrderResponseDto;
-import dev.sndsprfct.orders.entity.Order;
-import dev.sndsprfct.orders.entity.OrderItem;
-import dev.sndsprfct.orders.entity.Product;
+import dev.sndsprfct.orders.entity.orders.Order;
+import dev.sndsprfct.orders.entity.orders.OrderItem;
+import dev.sndsprfct.orders.entity.orders.Product;
 import dev.sndsprfct.orders.mapper.OrderMapper;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;

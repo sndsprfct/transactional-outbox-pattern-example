@@ -1,9 +1,9 @@
 package dev.sndsprfct.orders.test_component;
 
 import dev.sndsprfct.orders.constant.OrderStatus;
-import dev.sndsprfct.orders.entity.Order;
-import dev.sndsprfct.orders.entity.OrderItem;
-import dev.sndsprfct.orders.entity.Product;
+import dev.sndsprfct.orders.entity.orders.Order;
+import dev.sndsprfct.orders.entity.orders.OrderItem;
+import dev.sndsprfct.orders.entity.orders.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

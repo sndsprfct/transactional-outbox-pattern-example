@@ -33,7 +33,6 @@ public class OrderService {
     public OrderCreatedResponseDto createOrder(OrderCreationRequestDto orderCreationRequestDto) {
         List<Product> products = validateOrderCreationRequestDto(orderCreationRequestDto);
         Order order = orderMapper.map(orderCreationRequestDto, products);
-        order.setCustomerId(getCurrentUserId());
         Long createdOrderId = orderProcessingService.processOrderCreation(order);
         return new OrderCreatedResponseDto(createdOrderId);
     }

@@ -25,6 +25,7 @@ public interface OrderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "orderItems", source = "productsAmountByProductId", qualifiedByName = "mapProductsToOrderItems")
+    @Mapping(target = "customerId", expression = "java( dev.sndsprfct.orders.security.PrincipalUtils.getCurrentUserId() )")
     Order map(OrderCreationRequestDto orderCreationRequestDto, @Context List<Product> products);
 
     @Mapping(target = "orderId", source = "id")

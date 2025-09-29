@@ -19,6 +19,7 @@ The project that implements [**Transactional Outbox** pattern](https://microserv
 - [x] **Docker** containerization
 - [x] **Flyway** Database Migration Tool
 - [x] **MapStruct** for objects mapping
+- [x] **GitHub Actions** for CI
 - [x] Unit and Integration tests with
     - **Testcontainers**
     - **SpringBootTest**, **MockMvc**

@@ -11,6 +11,8 @@ The project that implements [**Transactional Outbox** pattern](https://microserv
 - [ ] **Apache Kafka** Message Broker
 - [ ] **Orders Processing** Microservice
 
+![img.png](docs/project_diagram.png)
+
 ## Technologies and Tools
 
 - [x] **Java 21**
